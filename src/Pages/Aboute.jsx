@@ -3,6 +3,25 @@ import React, { useEffect, useState } from "react";
 function Aboute() {
   console.log("aboute");
 
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function getData() {
+      try {
+        const res = await fetch(
+          "https://jsonplaceholder.typicode.com/comments",
+        );
+
+        if (!res.ok) {
+          throw new Error("Xatolik!");
+        }
+
+        const result = await res.json();
+        setData(result.slice(0, 12));
+      } catch (error) {
+        console.error(error);
+      } finally {
         setLoading(false);
       }
     }
